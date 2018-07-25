@@ -109,13 +109,6 @@ export default class JSONNestedNode extends React.Component {
     this.state = getStateFromProps(props);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const nextState = getStateFromProps(nextProps);
-    if (getStateFromProps(this.props).expanded !== nextState.expanded) {
-      this.setState(nextState);
-    }
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     return (
       !!Object.keys(nextProps).find(
@@ -126,6 +119,11 @@ export default class JSONNestedNode extends React.Component {
             : nextProps[key] !== this.props[key])
       ) || nextState.expanded !== this.state.expanded
     );
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const nextState = getStateFromProps(nextProps);
+    this.setState(nextState);
   }
 
   render() {

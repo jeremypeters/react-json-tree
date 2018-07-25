@@ -110,12 +110,6 @@ export default class JSONTree extends React.Component {
     this.state = getStateFromProps(props);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (['theme', 'invertTheme'].find(k => nextProps[k] !== this.props[k])) {
-      this.setState(getStateFromProps(nextProps));
-    }
-  }
-
   shouldComponentUpdate(nextProps) {
     return !!Object.keys(nextProps).find(
       k =>
@@ -123,6 +117,12 @@ export default class JSONTree extends React.Component {
           ? nextProps[k].join('/') !== this.props[k].join('/')
           : nextProps[k] !== this.props[k]
     );
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (['theme', 'invertTheme'].find(k => nextProps[k] !== this.props[k])) {
+      this.setState(getStateFromProps(nextProps));
+    }
   }
 
   render() {
